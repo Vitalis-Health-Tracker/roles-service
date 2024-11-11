@@ -5,6 +5,9 @@ import com.example.roles_service.service.RolesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RestController
 @RequestMapping("/roles")
 public class RolesController {
@@ -26,5 +29,13 @@ public class RolesController {
     public String deleteRole(@PathVariable String id) {
         rolesService.deleteRolesById(id);
         return "Role deleted";
+    }
+
+    @GetMapping
+    public List<String> getAllRoles() {
+        return rolesService.getAllRoles()
+                .stream()
+                .map(Roles::getRoleName)
+                .collect(Collectors.toList());
     }
 }
